@@ -10,6 +10,7 @@ from config import (
     VELOCITY_NOISE,
 )
 from models import MonteCarloResult, SimulationResult, SpaceObject
+from real_orbits import compute_distance
 
 
 def calculate_distance(obj1: SpaceObject, obj2: SpaceObject) -> float:
@@ -59,6 +60,42 @@ def simulate(
 
         satellite_a.update_position(time_step)
         satellite_b.update_position(time_step)
+
+    return SimulationResult(
+        closest_distance=closest_distance,
+        closest_step=closest_step,
+        highest_risk=highest_risk,
+        details={},
+    )
+
+
+def simulate_real_positions(
+    positions_a: list[tuple[float, float]],
+    positions_b: list[tuple[float, float]],
+) -> SimulationResult:
+    closest_distance = float("inf")
+    closest_step = 0
+    highest_risk = "LOW"
+
+    risk_priority = {
+        "LOW": 1,
+        "MEDIUM": 2,
+        "HIGH": 3,
+        "COLLISION": 4,
+    }
+
+    steps = min(len(positions_a), len(positions_b))
+
+    for step in range(steps):
+        distance = compute_distance(positions_a[step], positions_b[step])
+        risk = classify_risk(distance)
+
+        if distance < closest_distance:
+            closest_distance = distance
+            closest_step = step + 1
+
+        if risk_priority[risk] > risk_priority[highest_risk]:
+            highest_risk = risk
 
     return SimulationResult(
         closest_distance=closest_distance,

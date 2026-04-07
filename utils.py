@@ -13,8 +13,9 @@ def fuel_label(fuel_cost: int) -> str:
 def action_phrase(action: str) -> str:
     phrases = {
         "DO_NOTHING": "take no action",
-        "RAISE_ORBIT": "raise orbit",
-        "LOWER_ORBIT": "lower orbit",
+        "RAISE_ORBIT_2KM": "raise orbit by 2 km",
+        "LOWER_ORBIT_2KM": "lower orbit by 2 km",
+        "WAIT_2_HOURS": "wait 2 hours and reassess",
     }
     return phrases.get(action, action)
 

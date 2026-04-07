@@ -8,16 +8,24 @@ from simulator import simulate_monte_carlo
 
 
 def generate_actions() -> List[str]:
-    return ["DO_NOTHING", "RAISE_ORBIT", "LOWER_ORBIT"]
+    return [
+        "DO_NOTHING",
+        "RAISE_ORBIT_2KM",
+        "LOWER_ORBIT_2KM",
+        "WAIT_2_HOURS",
+    ]
 
 
 def apply_action(space_object: SpaceObject, action: str) -> SpaceObject:
     modified_object = space_object.copy()
 
-    if action == "RAISE_ORBIT":
+    if action == "RAISE_ORBIT_2KM":
         modified_object.vy += 1
-    elif action == "LOWER_ORBIT":
+    elif action == "LOWER_ORBIT_2KM":
         modified_object.vy -= 1
+    elif action == "WAIT_2_HOURS":
+        modified_object.x += modified_object.vx * 2
+        modified_object.y += modified_object.vy * 2
 
     return modified_object
 

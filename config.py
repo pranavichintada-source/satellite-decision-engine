@@ -18,8 +18,9 @@ RISK_PENALTIES = {
 
 FUEL_COSTS = {
     "DO_NOTHING": 0,
-    "RAISE_ORBIT": 2,
-    "LOWER_ORBIT": 2,
+    "RAISE_ORBIT_2KM": 3,
+    "LOWER_ORBIT_2KM": 3,
+    "WAIT_2_HOURS": 0,
 }
 
 SCORING_WEIGHTS = {
